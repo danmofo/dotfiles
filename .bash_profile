@@ -6,6 +6,9 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done
 unset file
 
+## Add z - https://github.com/rupa/z
+. ~/scripts/z/z.sh
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 

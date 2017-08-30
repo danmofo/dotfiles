@@ -5,4 +5,3 @@ A collection of my dot files. The installation script is copied from https://git
 ## Installing / updating
 
 Installation and updating is done through the `./install` script.
-
