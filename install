@@ -16,6 +16,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     --exclude "README.md" \
     --exclude "themes/" \
     -avh --no-perms . ~;
+
+    source ~/.bash_profile
 else
   echo "User cancelled installation. - :("
 fi;
