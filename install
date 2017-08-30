@@ -6,6 +6,8 @@
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
 echo "";
 
+git pull origin master
+
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   rsync --exclude ".git/" \
     --exclude ".DS_Store" \
@@ -13,7 +15,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     --exclude "install" \
     --exclude "README.md" \
     --exclude "themes/" \
-    -avh --no-perms -n . ~;
+    -avh --no-perms . ~;
 else
   echo "User cancelled installation. - :("
 fi;
