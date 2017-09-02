@@ -2,7 +2,12 @@
 #
 # This script is executed once on the initial run of the installation script. It installs things needed by our aliases.
 #
+# Once ran, a file will be created at $HOME/.dotfile-bootstrapped to stop further reinstallations.
+#
 # To force re-execution, use the --force flag. This would only ever be needed if this script has changed since you last ran the update script.
 
-sudo easy_install -U Pygments
+##
+touch "$HOME/.dotfile-bootstrapped"
 
+sudo easy_install -U Pygments
+sudo apt-get install silversearcher-ag

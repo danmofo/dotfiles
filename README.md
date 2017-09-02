@@ -25,6 +25,12 @@ A collection of my dotfiles. It borrows heavily from several other popular dotfi
 
 1. Run `./install` to get the latest updates from the master branch.
 
+### Developing
+
+The installation script was created using `argbash` (https://github.com/matejak/argbash/), using the template inside `install_template.m4` with the following command (assuming argbash is in the default install location): `~/.local/bin/argbash ~/dev/dotfiles/install_template.m4 -o install`
+
+`argbash` wraps our installation script and gives us access to passed arguments, without having to write any argument parsing code.
+
 ## TODO
 
 1. Fill in missing files.

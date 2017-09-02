@@ -4,6 +4,11 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+# mv, rm, cp
+alias mv='mv -v'
+alias rm='rm -i -v'
+alias cp='cp -v'
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
   colorflag="--color"
@@ -49,3 +54,9 @@ alias dis="git diff --name-status master"
 
 ## Find shitty characters that
 alias shitchars="find . -maxdepth 5 -type f -exec grep -En '’|–|–' --exclude='./.*' --exclude='*node_modules*' {} +"
+
+# Empty the Trash on all mounted volumes and the main HDD. then clear the useless sleepimage
+alias emptytrash=" \
+    sudo rm -rfv /Volumes/*/.Trashes; \
+    rm -rfv ~/.Trash/*; \
+"
