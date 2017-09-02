@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # dotfiles installation script.
 #
 # Usage:
 # ./install (--force)
+#
+
 #
 # This command is used for both the initial installation and updating.
 #
@@ -12,6 +14,8 @@
 # Argbash docs: http://argbash.readthedocs.io/en/stable/example.html
 #
 # ARG_OPTIONAL_BOOLEAN([force], , [Force the bootstrap installation script to be executed again])
+# ARG_OPTIONAL_BOOLEAN([dry-run], , [Get a report on what will happen running this script. Nothing on the system will be changed.])
+# ARG_HELP(Run once to install the dotfiles and associated dependencies. Run again to get updates.)
 # ARGBASH_GO
 
 # [ <-- needed because of Argbash
