@@ -5,9 +5,19 @@
 # Once ran, a file will be created at $HOME/.dotfile-bootstrapped to stop further reinstallations.
 #
 # To force re-execution, use the --force flag. This would only ever be needed if this script has changed since you last ran the update script.
-
-##
 touch "$HOME/.dotfile-bootstrapped"
+
+## todo conditionally configure the environment to see if these tools are already installed / what package manager should be used
+
+## Update NPM packages
+sudo npm install npm -g
+sudo npm update -g
 
 sudo easy_install -U Pygments
 sudo apt-get install silversearcher-ag
+
+## Node + n
+sudo apt-get install -y nodejs
+sudo npm install -g n
+
+sudo npm install -g diff-so-fancy

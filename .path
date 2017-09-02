@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+## For custom paths
+
+export PATH=$HOME/.local/bin/:$PATH

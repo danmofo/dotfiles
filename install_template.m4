@@ -40,6 +40,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     --exclude ".DS_Store" \
     --exclude ".osx" \
     --exclude "install" \
+    --exclude "install_template.m4" \
     --exclude "bootstrap" \
     --exclude "README.md" \
     --exclude "themes/" \
