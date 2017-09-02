@@ -1,13 +1,28 @@
 #!/usr/bin/env bash
 
-## Source: https://github.com/mathiasbynens/dotfiles/blob/master/bootstrap.sh
+# dotfiles installation script.
+#
+# Usage:
+# ./install
+#
+# This command is used for both the initial installation and updating.
+#
+# Source: https://github.com/mathiasbynens/dotfiles/blob/master/bootstrap.sh
 
 ## Read user input, taking the first character that was entered (-n 1)
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
 echo "";
 
+## Grab the latest version
 git pull origin master
 
+if ![[ -e "$HOME/.dotfile-bootstrapped" ]]; then
+  ./bootstrap
+  touch "$HOME/.dotfile-bootstrapped"
+fi
+
+## Sync files into the relevant locations, overwriting anything that exists.
+## todo: possibly store a backup of these somewhere incase the installation screws something up
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   rsync --exclude ".git/" \
     --exclude ".DS_Store" \
