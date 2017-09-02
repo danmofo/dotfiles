@@ -89,7 +89,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   ## Optionally run the bootstrap script in the following circumstances:
   ## - --forced flag passed
   ## - If the script hasn't been run before
-  if [[ $forced == "on"] || [ ! -e "$HOME/.dotfile-bootstrapped" ]]; then
+  if [ $forced == "on" -o  ! -e "$HOME/.dotfile-bootstrapped" ]; then
     ./bootstrap
   fi
 
