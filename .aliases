@@ -52,7 +52,7 @@ alias gch="git checkout -b"
 alias di="git diff --name-only master"
 alias dis="git diff --name-status master"
 
-## Find shitty characters that
+## Find shitty characters that causes problems when utf-8 encoding is not used (aka half the pages @ work)
 alias shitchars="find . -maxdepth 5 -type f -exec grep -En '’|–|–' --exclude='./.*' --exclude='*node_modules*' {} +"
 
 # Empty the Trash on all mounted volumes and the main HDD. then clear the useless sleepimage
