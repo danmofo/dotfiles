@@ -29,7 +29,7 @@ show_backups=$_arg_backups
 ## Configuration
 dotfiles=(".path" ".bash_profile" ".bash_prompt" ".exports" ".aliases" ".functions" ".extra" ".inputrc" ".osx")
 backup_location="$HOME/.dotfile-backups/"
-software_dependencies=("node" "n" "diff-so-fancy" "ag" "dsdsda")
+software_dependencies=("node" "n" "diff-so-fancy" "ag")
 
 ########################################
 #  Pre-installation checks.
