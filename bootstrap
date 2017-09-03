@@ -24,7 +24,7 @@ fi
 
 ## Install npm packages if they aren't already
 echo "Installing any missing NPM packages..."
-[[ ! $(type -P n) ]] && npm install -g;
+[[ ! $(type -P n) ]] && npm install -g n;
 [[ ! $(type -P diff-so-fancy) ]] && npm install -g diff-so-fancy;
 
 ## Install OS specific packages

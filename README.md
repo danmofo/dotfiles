@@ -48,3 +48,4 @@ The installation script was created using `argbash` (https://github.com/matejak/
 2. Add a way to restore to previous versions in the backup directory.
 3. Re add things to the Mac path as I discover what I broke...
 4. Spend some more time learning Bash scripting as there are several areas I'd like to improve on
+5. Pull repo changes before running install script
