@@ -29,7 +29,7 @@ show_backups=$_arg_backups
 ## Configuration
 dotfiles=(".path" ".bash_profile" ".bash_prompt" ".exports" ".aliases" ".functions" ".extra" ".inputrc" ".osx")
 backup_location="$HOME/.dotfile-backups/"
-
+software_dependencies=("node" "n" "diff-so-fancy" "ag" "dsdsda")
 
 ########################################
 #  Pre-installation checks.
@@ -50,15 +50,15 @@ if [[ $is_dry_run == "on" ]]; then
   ## Report which files would be affected by running this script
   existing_files=()
 
-  for file in ${dotfiles[@]}; do
+  for file in "${dotfiles[@]}"; do
     if [[ -e "$HOME/$file" ]]; then
-        existing_files+=($file)
+        existing_files+=("$file")
     fi
   done
 
-  if [[ ${existing_files[@]} != "" ]]; then
+  if [[ "${existing_files[@]}" != "" ]]; then
     echo "The following file(s) were found in your home directory and would be archived and replaced:"
-    for file in ${existing_files[@]}; do
+    for file in "${existing_files[@]}"; do
       echo "  - ~/$file"
     done
   fi
@@ -67,30 +67,13 @@ if [[ $is_dry_run == "on" ]]; then
   ## at the start of the script so that the conditional statment isn't repeated
   echo "Software summary:"
 
-  ## todo: refactor
-  if [[ ! $(type -P "node")  ]]; then
-    echo "  - node will be installed."
-  else
-    echo "  - node already installed @ $(type -P node)."
-  fi
-
-  if [[ ! $(type -P n)  ]]; then
-    echo "  - n will be installed."
-  else
-    echo "  - n already installed @ $(type -P n)."
-  fi
-
-  if [[ ! $(type -P diff-so-fancy)  ]]; then
-    echo "  - diff-so-fancy will be installed."
-  else
-    echo "  - diff-so-fancy already installed @ $(type -P diff-so-fancy)."
-  fi
-
-  if [[ ! $(type -P ag)  ]]; then
-    echo "  - ag will be installed."
-  else
-    echo "  - ag already installed @ $(type -P ag)."
-  fi
+  for dependency in "${software_dependencies[@]}"; do
+    if [[ ! $(type -P "$dependency") ]]; then
+      echo "  - $dependency will be installed."
+    else
+      echo "  - $dependency already installed @ $(type -P "$dependency")."
+    fi
+  done
 
   exit
 fi
@@ -101,9 +84,9 @@ fi
 ########################################
 
 if [[ $_arg_backups == "on" ]]; then
-  if [[ -e $backup_location ]]; then
+  if [[ -e "$backup_location" ]]; then
       echo "Found the following backups @ $backup_location:"
-      ls -l $backup_location
+      ls -l "$backup_location"
     else
       echo "No backups found."
   fi
@@ -120,10 +103,10 @@ read -p "This will backup all existing dotfiles and could break your system. Are
 echo "";
 
 ## Sync files into the relevant locations, overwriting anything that exists.
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [[ "$REPLY" =~ ^[Yy]$ ]]; then
 
   ## Make backups of existing files before we replace anything
-  if [[ ${dotfiles[@]} != "" ]]; then
+  if [[ "${dotfiles[@]}" != "" ]]; then
     backup_dir="$backup_location$(date +%s)"
     mkdir -p $backup_dir
     echo "Creating backup @ $backup_dir"
@@ -159,7 +142,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     --exclude "npm-debug.log" \
     -avh --no-perms . $HOME;
 
-    source $HOME/.bash_profile
+  source $HOME/.bash_profile
 else
   echo "User cancelled installation. - :("
 fi;
