@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+## OSX specific things
+export PATH=$PATH:/usr/local/lib/node_modules/npm/node_modules/
+export PATH=$PATH:$HOME/.sdkman/candidates/springboot/current/bin
+
+## Restore old PATH entries, need to sift through these and see which ones I actually use
+export PATH=$PATH:$HOME/.gvm/vertx/current/bin
+export PATH=$PATH:$HOME/.gvm/springboot/current/bin
+export PATH=$PATH:$HOME/.gvm/lazybones/current/bin
+export PATH=$PATH:$HOME/.gvm/jbake/current/bin
+export PATH=$PATH:$HOME/.gvm/groovyserv/current/bin
+export PATH=$PATH:$HOME/.gvm/groovy/current/bin
+export PATH=$PATH:$HOME/.gvm/griffon/current/bin
+export PATH=$PATH:$HOME/.gvm/grails/current/bin
+export PATH=$PATH:$HOME/.gvm/gradle/current/bin
+export PATH=$PATH:$HOME/.gvm/glide/current/bin
+export PATH=$PATH:$HOME/.gvm/gaiden/current/bin
+export PATH=$PATH:$HOME/.gvm/crash/current/bin
+export PATH=$PATH:$HOME/.gvm/asciidoctorj/current/bin
+export PATH=$PATH:/usr/local/heroku/bin
+export PATH=$PATH:/usr/local/lib/node_modules/npm/node_modules/
+export PATH=$PATH:$HOME/dotfiles/scripts
+export PATH=$PATH:$HOME/.local/bin/
+export PATH=$PATH:/usr/local/lib/node_modules/npm/node_modules/
+export PATH=$PATH:$HOME/dotfiles/scripts
+export PATH=$PATH:$HOME/.local/bin/
+export PATH=$PATH:/usr/bin
+export PATH=$PATH:/bin
+export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/sbin
+export PATH=$PATH:/usr/local/bin

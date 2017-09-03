@@ -6,7 +6,8 @@ A collection of my dotfiles. It borrows heavily from several other popular dotfi
 
 ## What does it contain?
 
-- Aliases
+- Aliases / functions
+- `.inputrc`
 - Bash prompt configuration
 - Themes for iTerm2
 - Scripts
@@ -17,9 +18,19 @@ A collection of my dotfiles. It borrows heavily from several other popular dotfi
 
 ### Installation
 
+It's worth noting that the installation script makes no attempt to reinstall existing software, and will only install them if they are completely
+absent from the system. So if a super old version of *software X* is installed, the setup may fail and you will need to manually reinstall it.
+
 1. Clone the repository `git clone https://github.com/danmofo/dotfiles --recursive`, **it's very important you use --recursive, otherwise the Git submodules won't be checked out**.
-2. Run `./install`
+2. Run `./install`. The script **will always** back up existing dotfiles and will only install missing dependencies. You will be prompted before this happens.
 3. Log out and in to see the changes.
+
+#### Parameters
+
+The install script accepts the following params:
+- `--dry-run`, shows a report of what changes will be made to the system.
+- `--backups`, lists the backups made so far.
+- `--force`, forces the bootstrap script to be executed another time.
 
 ### Updating
 
@@ -33,5 +44,7 @@ The installation script was created using `argbash` (https://github.com/matejak/
 
 ## TODO
 
-1. Fill in missing files.
-2. Add steps to apply the theme.
+1. Add steps to apply the theme.
+2. Add a way to restore to previous versions in the backup directory.
+3. Re add things to the Mac path as I discover what I broke...
+4. Spend some more time learning Bash scripting as there are several areas I'd like to improve on

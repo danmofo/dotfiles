@@ -6,6 +6,13 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra,inputrc}; do
 done
 unset file
 
+## Source the environment specific stuff
+if [[ $OSTYPE == "linux-gnu" ]]; then
+    echo "No Linux specific dotfile found."
+  else
+    source "$HOME/.osx"
+fi
+
 ## Add z - https://github.com/rupa/z
 . ~/scripts/z/z.sh
 

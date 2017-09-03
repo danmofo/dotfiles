@@ -1,28 +1,37 @@
 #!/usr/bin/env bash
 #
-# This script is executed once on the initial run of the installation script. It installs things needed by our aliases.
+# This script is executed once on the initial run of the installation script. It installs things needed by other dotfiles.
 #
 # Once ran, a file will be created at $HOME/.dotfile-bootstrapped to stop further reinstallations.
 #
 # To force re-execution, use the --force flag. This would only ever be needed if this script has changed since you last ran the update script.
 
+## Let this script know that its already been executed
 touch "$HOME/.dotfile-bootstrapped"
 
-if [[ $OSTYPE == "linux-gnu" ]]; then
-
-  ## Update NPM packages
-  sudo npm install npm -g
-  sudo npm update -g
-
-  sudo easy_install -U Pygments
-  sudo apt-get install silversearcher-ag
-
-  ## Node + n
-  sudo apt-get install -y nodejs
-  sudo npm install -g n
-
-  sudo npm install -g diff-so-fancy
-
+## Install node
+if [[ ! $(type -P "node") ]]; then
+  if [[ $OSTYPE == "linux-gnu" ]]; then
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -ss
+    sudo apt-get install -y nodejs
+    sudo apt-get install -y npm
   else
-    echo "todo: add osx"
+    brew install node
+  fi
+else
+  echo "Not installing Node, it appears to already be installed."
+fi
+
+## Install npm packages if they aren't already
+echo "Installing any missing NPM packages..."
+[[ ! $(type -P n) ]] && npm install -g;
+[[ ! $(type -P diff-so-fancy) ]] && npm install -g diff-so-fancy;
+
+## Install OS specific packages
+if [[ $OSTYPE == "linux-gnu" ]]; then
+  echo "Installing Linux specific packages..."
+  [[ ! $(type -P ag) ]] && sudo apt-get install silversearcher-ag
+else
+  echo "Installing OSX only packages..."
+  [[ ! $(type -P ag) ]] && brew install ag;
 fi

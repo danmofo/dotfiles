@@ -15,6 +15,7 @@
 #
 # ARG_OPTIONAL_BOOLEAN([force],[],[Force the bootstrap installation script to be executed again])
 # ARG_OPTIONAL_BOOLEAN([dry-run],[],[Get a report on what will happen running this script. Nothing on the system will be changed.])
+# ARG_OPTIONAL_BOOLEAN([backups],[],[List backups made for this system.])
 # ARG_HELP([Run once to install the dotfiles and associated dependencies. Run again to get updates.])
 # ARGBASH_GO()
 # needed because of Argbash --> m4_ignore([
@@ -44,13 +45,15 @@ begins_with_short_option()
 # THE DEFAULTS INITIALIZATION - OPTIONALS
 _arg_force=off
 _arg_dry_run=off
+_arg_backups=off
 
 print_help ()
 {
 	printf "%s\n" "Run once to install the dotfiles and associated dependencies. Run again to get updates."
-	printf 'Usage: %s [--(no-)force] [--(no-)dry-run] [-h|--help]\n' "$0"
+	printf 'Usage: %s [--(no-)force] [--(no-)dry-run] [--(no-)backups] [-h|--help]\n' "$0"
 	printf "\t%s\n" "--force,--no-force: Force the bootstrap installation script to be executed again (off by default)"
 	printf "\t%s\n" "--dry-run,--no-dry-run: Get a report on what will happen running this script. Nothing on the system will be changed. (off by default)"
+	printf "\t%s\n" "--backups,--no-backups: List backups made for this system. (off by default)"
 	printf "\t%s\n" "-h,--help: Prints help"
 
 }
@@ -68,6 +71,10 @@ parse_commandline ()
 			--no-dry-run|--dry-run)
 				_arg_dry_run="on"
 				test "${1:0:5}" = "--no-" && _arg_dry_run="off"
+				;;
+			--no-backups|--backups)
+				_arg_backups="on"
+				test "${1:0:5}" = "--no-" && _arg_backups="off"
 				;;
 			-h|--help)
 				print_help
@@ -93,15 +100,123 @@ parse_commandline "$@"
 # [ <-- needed because of Argbash
 
 
+## Parameters parsed and made available by argbash
 forced=$_arg_force
+is_dry_run=$_arg_dry_run
+show_backups=$_arg_backups
+
+## Configuration
+dotfiles=(".path" ".bash_profile" ".bash_prompt" ".exports" ".aliases" ".functions" ".extra" ".inputrc" ".osx")
+backup_location="$HOME/.dotfile-backups/"
+
+
+########################################
+#  Pre-installation checks.
+########################################
+
+## Make sure brew is installed on OSX
+if [[ $OSTYPE == "darwin15" ]]; then
+  if [[ ! $(type -P brew) ]]; then
+    echo "Please install homebrew (brew) before continuing: https://brew.sh/"
+  fi
+fi
+
+########################################
+#  Dry run (--dry-run)
+########################################
+if [[ $is_dry_run == "on" ]]; then
+
+  ## Report which files would be affected by running this script
+  existing_files=()
+
+  for file in ${dotfiles[@]}; do
+    if [[ -e "$HOME/$file" ]]; then
+        existing_files+=($file)
+    fi
+  done
+
+  if [[ ${existing_files[@]} != "" ]]; then
+    echo "The following file(s) were found in your home directory and would be archived and replaced:"
+    for file in ${existing_files[@]}; do
+      echo "  - ~/$file"
+    done
+  fi
+
+  ## Report the software that would be installed - I know this is duplicated. I could possibly set some boolean variables
+  ## at the start of the script so that the conditional statment isn't repeated
+  echo "Software summary:"
+
+  ## todo: refactor
+  if [[ ! $(type -P "node")  ]]; then
+    echo "  - node will be installed."
+  else
+    echo "  - node already installed @ $(type -P node)."
+  fi
+
+  if [[ ! $(type -P n)  ]]; then
+    echo "  - n will be installed."
+  else
+    echo "  - n already installed @ $(type -P n)."
+  fi
+
+  if [[ ! $(type -P diff-so-fancy)  ]]; then
+    echo "  - diff-so-fancy will be installed."
+  else
+    echo "  - diff-so-fancy already installed @ $(type -P diff-so-fancy)."
+  fi
+
+  if [[ ! $(type -P ag)  ]]; then
+    echo "  - ag will be installed."
+  else
+    echo "  - ag already installed @ $(type -P ag)."
+  fi
+
+  exit
+fi
+
+########################################
+#  Backups (--backups)
+#  List all backups that have been made so far.
+########################################
+
+if [[ $_arg_backups == "on" ]]; then
+  if [[ -e $backup_location ]]; then
+      echo "Found the following backups @ $backup_location:"
+      ls -l $backup_location
+    else
+      echo "No backups found."
+  fi
+
+  exit
+fi
+
+########################################
+#  Main script
+########################################
 
 ## Read user input, taking the first character that was entered (-n 1)
-read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+read -p "This will backup all existing dotfiles and could break your system. Are you sure? (y/n) " -n 1;
 echo "";
 
 ## Sync files into the relevant locations, overwriting anything that exists.
-## todo: possibly store a backup of these somewhere incase the installation screws something up
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+
+  ## Make backups of existing files before we replace anything
+  if [[ ${dotfiles[@]} != "" ]]; then
+    backup_dir="$backup_location$(date +%s)"
+    mkdir -p $backup_dir
+    echo "Creating backup @ $backup_dir"
+    for file in ${dotfiles[@]}; do
+      if [[ -e "$HOME/$file" ]]; then
+          cp $HOME/$file $backup_dir/$file
+          echo "Backed up $HOME/$file"
+      fi
+    done
+
+    echo "Existing dotfiles have been backed up."
+  else
+    echo "No existing dotfiles found."
+  fi
 
   ## Grab the latest version
   git pull origin master
@@ -115,15 +230,15 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
   rsync --exclude ".git/" \
     --exclude ".DS_Store" \
-    --exclude ".osx" \
     --exclude "install" \
     --exclude "install_template.m4" \
     --exclude "bootstrap" \
     --exclude "README.md" \
     --exclude "themes/" \
-    -avh --no-perms . ~;
+    --exclude "npm-debug.log" \
+    -avh --no-perms . $HOME;
 
-    source ~/.bash_profile
+    source $HOME/.bash_profile
 else
   echo "User cancelled installation. - :("
 fi;
