@@ -27,7 +27,7 @@ is_dry_run=$_arg_dry_run
 show_backups=$_arg_backups
 
 ## Configuration
-dotfiles=(".path" ".bash_profile" ".bash_prompt" ".exports" ".aliases" ".functions" ".extra" ".inputrc" ".osx")
+dotfiles=(".path" ".bash_profile" ".bash_prompt" ".exports" ".aliases" ".functions" ".extra" ".inputrc" ".osx" ".vimrc")
 backup_location="$HOME/.dotfile-backups/"
 software_dependencies=("node" "n" "diff-so-fancy" "ag")
 
