@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Strips the CID from filenames
+#
+# Converts images with names like this:./2017-christmassanta-twitter-header_1517.png
+# into names like this: ./2017-christmassanta-twitter-header.png
+
+if [[ -z "$1" ]]; then
+  echo "No CID specified, exiting."
+  exit 1
+fi
+
+for image in *.{png,html,pdf}; do
+  mv "${image}" "${image/_1517/}"
+done

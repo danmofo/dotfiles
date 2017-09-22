@@ -9,3 +9,6 @@ set softtabstop=4
 
 " Expand TABs to spaces
 set expandtab
+
+" Add line numbers
+set number
