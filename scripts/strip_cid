@@ -11,5 +11,5 @@ if [[ -z "$1" ]]; then
 fi
 
 for image in *.{png,html,pdf}; do
-  mv "${image}" "${image/_1517/}"
+  mv "${image}" "${image/_$1/}"
 done

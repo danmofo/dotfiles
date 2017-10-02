@@ -6,15 +6,15 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extras,inputrc}; do
 done
 unset file
 
-## Source the environment specific stuff
+# Source the environment specific stuff
 if [[ $OSTYPE == "linux-gnu" ]]; then
     echo "No Linux specific dotfile found."
   else
     source "$HOME/.osx"
 fi
 
-## Add z - https://github.com/rupa/z
-. ~/scripts/z/z.sh
+# Add z - https://github.com/rupa/z
+source ~/scripts/z/z.sh
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -34,3 +34,8 @@ done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2 | tr ' ' '\n')" scp sftp ssh
+
+# This makes SDKMAN available - no standalone executable is provided
+if [[ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
