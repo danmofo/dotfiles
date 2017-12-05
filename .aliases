@@ -60,3 +60,12 @@ alias emptytrash=" \
     sudo rm -rfv /Volumes/*/.Trashes; \
     rm -rfv ~/.Trash/*; \
 "
+
+# Repetitive work tasks - requires s3cmd to be installed + an access key / secret (configure using s3cmd --configure)
+
+# Download whitelabel data from the production s3 bucket to the current directory
+alias dl_whitelabel="s3cmd get --recursive s3://everyclickltd-website-public/WebServer/whitelabel/"
+# Upload local whitelabel data onto the test bucket, it will do nothing if the folder doesn't exist locally
+alias ul_whitelabel="test -d ./fundraising/ && s3cmd sync ./fundraising/ s3://everyclickltd-website-test/WebServer/whitelabel/fundraising/"
+# Combine the above two steps - pretty wasteful if the folder is already downloaded locally - could possibly use sync to selectively download them?
+alias sync_whitelabel="s3cmd get --recursive s3://everyclickltd-website-public/WebServer/whitelabel/ && test -d ./fundraising/ && s3cmd sync ./fundraising/ s3://everyclickltd-website-test/WebServer/whitelabel/fundraising/"
