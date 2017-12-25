@@ -35,3 +35,11 @@ else
   echo "Installing OSX only packages..."
   [[ ! $(type -P ag) ]] && brew install ag;
 fi
+
+## Add some symbolic links to allow themes to be used
+if [[ ! -f "$HOME/.vim/colors/molokai.vim" ]]; then
+  ln -s ./themes/molokai/colors/molokai.vim $HOME/.vim/colors/molokai.vim
+  echo "Linked themes."
+else
+  echo "Themes are already linked."
+fi
