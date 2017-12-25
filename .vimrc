@@ -12,3 +12,7 @@ set expandtab
 
 " Add line numbers
 set number
+
+" Colours / syntax highlighting
+syntax enable
+colorscheme molokai
