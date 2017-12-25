@@ -44,7 +44,7 @@ else
   echo "Vim theme directory already exists."
 fi
 
-if [[ ! -f "$HOME/.vim/colors/molokai.vm" ]]; then
+if [[ ! -L "$HOME/.vim/colors/molokai.vm" ]]; then
   ln -s ./themes/molokai/colors/molokai.vim $HOME/.vim/colors/molokai.vim
   echo "Linked Molokai theme to Vim theme directory."
 else
