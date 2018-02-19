@@ -66,6 +66,7 @@ alias dev="cd /var/everyclick/development/"
 alias gayl="cd /var/everyclick/development/gayl"
 alias ec="cd /var/everyclick/development/everyclick"
 alias ea="cd /var/everyclick/development/externaladmin"
+alias compile="cd /var/everyclick/compile"
 alias dl="open /Users/danielmoffat/Downloads"
 
 # Repetitive work tasks - requires s3cmd to be installed + an access key / secret (configure using s3cmd --configure)
