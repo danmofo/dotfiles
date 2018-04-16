@@ -70,9 +70,9 @@ alias compile="cd /var/everyclick/compile"
 alias dl="open /Users/danielmoffat/Downloads"
 
 # Vagarant alias
-alias vu="vagrant up"
-alias sshv="vagrant ssh"
-alias vh="vagrant halt"
+alias vu="cd ~/dev && vagrant up"
+alias sshv="cd ~/dev && vagrant ssh"
+alias vh="cd ~/dev && vagrant halt"
 
 # Repetitive work tasks - requires s3cmd to be installed + an access key / secret (configure using s3cmd --configure)
 
