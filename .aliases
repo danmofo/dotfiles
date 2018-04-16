@@ -69,6 +69,11 @@ alias ea="cd /var/everyclick/development/externaladmin"
 alias compile="cd /var/everyclick/compile"
 alias dl="open /Users/danielmoffat/Downloads"
 
+# Vagarant alias
+alias vu="vagrant up"
+alias sshv="vagrant ssh"
+alias vh="vagrant halt"
+
 # Repetitive work tasks - requires s3cmd to be installed + an access key / secret (configure using s3cmd --configure)
 
 # Download whitelabel data from the production s3 bucket to the current directory
