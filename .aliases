@@ -45,7 +45,6 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 
 # Git aliases
 alias gs="git status"
-alias gc="git commit -a"
 alias gl="git log --oneline --decorate --graph"
 alias gla="gl --all"
 alias gch="git checkout -b"
@@ -73,6 +72,7 @@ alias dl="open /Users/danielmoffat/Downloads"
 alias vu="cd ~/dev && vagrant up"
 alias sshv="cd ~/dev && vagrant ssh"
 alias vh="cd ~/dev && vagrant halt"
+
 
 # Repetitive work tasks - requires s3cmd to be installed + an access key / secret (configure using s3cmd --configure)
 

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# Change Git branches for projects at work
+#
+# Projects contain a project repo, plus another repo containing the common stuff,
+# when you're working with these, you generally change branches twice, and do the same
+# manual steps afterwards every time (Maven installing, restarting, etc.).
+#
+# Arguments:
+# - $1, The branch name
+# - $2, --stash, whether to stash changes before changing branches
+
+common_repo="/var/everyclick/development/common"
+gayl_repo="/var/everyclick/development/gayl"
+vagrant_dir="/Users/danielmoffat/dev"
+
+branch=$1
+stash_changes=$2
+
+function exit_if_changes() {
+    if [[ -n $(git status --porcelain) ]]; then
+        echo "Repo ($(pwd)) has changes, commit / stash first. Or use --stash to stash changes before this."
+        exit 1
+    fi
+}
+
+function stash_changes() {
+    if [[ ! -z "$stash_changes" ]]; then
+        git stash
+    fi
+}
+
+if [[ -z "$branch" ]]; then
+    echo "Please provide a branch name."
+    exit 1
+fi
+
+# Do common first
+cd "$common_repo"
+stash_changes
+exit_if_changes
+git checkout "$1"
+mvn clean install
+
+# Then GAYL
+cd "$gayl_repo"
+stash_changes
+exit_if_changes
+git checkout "$1"
+mvn clean compile
+
+# Once these are done, restart the necessary stuff inside the Vagrant box
+VAGRANT_CWD="$vagrant_dir" vagrant ssh -c "sudo service httpd restart; sudo service tomcat7 stop -force && sleep 6 && sudo service tomcat7 start"
